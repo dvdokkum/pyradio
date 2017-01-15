@@ -8,9 +8,10 @@ from urlparse import urlparse
 
 stream = 0
 
-#available streams, put these in a dict
-wxyc = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
-wfmu = "http://stream0.wfmu.org/freeform-128k.mp3"
+## available stations ##
+station = {}
+station['wxyc'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
+station['wfmu'] = "http://stream0.wfmu.org/freeform-128k.mp3"
 
 ###########################
 # get npr hourly newscast #
@@ -18,22 +19,16 @@ wfmu = "http://stream0.wfmu.org/freeform-128k.mp3"
 
 #fetch rss feed
 d = feedparser.parse('https://www.npr.org/rss/podcast.php?id=500005')
+
 #parse url of mp3 file
 raw_url = d.entries[0].enclosures[0].url
+
 #mpg123 won't load https and doesn't handle query params well, so this cleans up the url
 o = urlparse(raw_url)
 npr = "http://" + o.netloc + o.path
-npr_title = d.entries[0].title
-print npr
 
-def main():
-	play(wxyc)
-	time.sleep(5)
-	play_news()
-	time.sleep(10)
-	play(wfmu)
-	time.sleep(5)
-	off()
+#grab the stream title incase we need it later
+npr_title = d.entries[0].title
 
 def play(s):
 	off()
@@ -56,6 +51,14 @@ def off():
 	except (AttributeError, OSError):
 		pass
 
+def main():
+	play(station['wxyc'])
+	time.sleep(5)
+	play_news()
+	time.sleep(10)
+	play(station['wfmu'])
+	time.sleep(5)
+	off()
 
 if __name__ == '__main__':
 	sys.exit(main())
