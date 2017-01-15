@@ -36,19 +36,34 @@ def play(s):
 	global stream_status
 	off()
 	stream = subprocess.Popen(["mpg123", "-q", s], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-	stream_status = "stream"
+	stream_status = s
 
 def play_news():
 	global stream
 	global stream_status
-	off()
+	
+	#save what was just playing so we can play it again when the news ends
+	last = stream_status
+	
+	#fetches latest newscast
 	init_npr()
+	
+	#kill the stream
+	off()
+	
+	#play the news (note the k argument in mpg123 is # of frames to skip. 900 should get us past the preroll ad)
 	stream = subprocess.Popen(["mpg123", "-q", "-k 12000", station['npr']], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 	stream_status = "news"
 	stream.wait()
-	if stream_status == "news":
-		play(station['wxyc'])	
 
+	# if the news has ended, continue playing last station
+	if stream_status == "news":
+		if last == "news" or last == "off":
+			pass
+		else:
+			play(last)	
+
+#play news in a thread so we can queue and interrupt if necessary
 def news_break():
 	t = threading.Thread(target=play_news)
 	t.start()
@@ -64,11 +79,11 @@ def off():
 		stream_status = "off"
 
 def main():
-	play(station['wxyc'])
-	time.sleep(5)
-	news_break()
-	time.sleep(15)
 	play(station['wfmu'])
+	time.sleep(10)
+	news_break()
+	time.sleep(8)
+	play(station['wxyc'])
 	time.sleep(5)
 	off()
 
