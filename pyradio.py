@@ -31,6 +31,7 @@ def init_npr():
 	#grab the stream title incase we need it later
 	npr_title = d.entries[0].title
 
+#plays stream url provided in arg
 def play(s):
 	global stream
 	global stream_status
@@ -52,7 +53,7 @@ def play_news():
 	off()
 	
 	#play the news (note the k argument in mpg123 is # of frames to skip. 900 should get us past the preroll ad)
-	stream = subprocess.Popen(["mpg123", "-q", "-k 12000", station['npr']], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+	stream = subprocess.Popen(["mpg123", "-q", "-k 900", station['npr']], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 	stream_status = "news"
 	stream.wait()
 
@@ -68,6 +69,7 @@ def news_break():
 	t = threading.Thread(target=play_news)
 	t.start()
 
+#turns everything off
 def off():
 	global stream_status
 	try:
