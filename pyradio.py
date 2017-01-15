@@ -14,6 +14,8 @@ stream_status = "off"
 station = {}
 station['wxyc'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
 station['wfmu'] = "http://stream0.wfmu.org/freeform-128k.mp3"
+station['resonance'] = "http://54.77.136.103:8000/resonance"
+station['wbur'] = "http://wbur-sc.streamguys.com/wbur"
 
 def init_npr():
 	global station
@@ -81,7 +83,7 @@ def off():
 		stream_status = "off"
 
 def main():
-	play(station['wfmu'])
+	play(station['resonance'])
 	time.sleep(10)
 	news_break()
 	time.sleep(8)
