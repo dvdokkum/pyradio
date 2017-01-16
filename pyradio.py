@@ -7,10 +7,11 @@ import subprocess
 import feedparser
 from urlparse import urlparse
 
-import RPi.GPIO as GPIO
+# for fucking with buttons 
+# import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.IN)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(23, GPIO.IN)
 
 stream = 0
 stream_status = "off"
@@ -87,21 +88,21 @@ def off():
 	else:
 		stream_status = "off"
 
-# def main():
-# 	play(station['resonance'])
-# 	time.sleep(10)
-# 	news_break()
-# 	time.sleep(8)
-# 	play(station['wxyc'])
-# 	time.sleep(5)
-# 	off()
+def main():
+	play(station['resonance'])
+	time.sleep(10)
+	news_break()
+	time.sleep(8)
+	play(station['wxyc'])
+	time.sleep(5)
+	off()
 
-# if __name__ == '__main__':
-# 	sys.exit(main())
+if __name__ == '__main__':
+	sys.exit(main())
 
-while True:
-	print "silence!"
-	if (GPIO.input(23) == 0):
-		print "news!"
-		news_break()
-	time.sleep(1)
+#little test loop for GPIO
+# while True:
+# 	if (GPIO.input(23) == 0):
+# 		print "news!"
+# 		news_break()
+# 	time.sleep(1)
