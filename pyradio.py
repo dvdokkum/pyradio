@@ -100,6 +100,8 @@ def off():
 # 	sys.exit(main())
 
 while True:
+	print "silence!"
 	if (GPIO.input(23) == 0):
+		print "news!"
 		news_break()
-	sleep(1)
+	time.sleep(1)
