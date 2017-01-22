@@ -7,14 +7,19 @@ import subprocess
 import feedparser
 from urlparse import urlparse
 
-# for fucking with buttons 
-# import RPi.GPIO as GPIO
 
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(23, GPIO.IN)
+# for fucking with buttons 
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 
 stream = 0
 stream_status = "off"
+
+test = 0
 
 ## available stations ##
 station = {}
@@ -22,6 +27,8 @@ station['wxyc'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
 station['wfmu'] = "http://stream0.wfmu.org/freeform-128k.mp3"
 station['resonance'] = "http://54.77.136.103:8000/resonance"
 station['wbur'] = "http://wbur-sc.streamguys.com/wbur"
+
+next_station = station[(station.keys()[0])]
 
 def init_npr():
 	global station
@@ -88,7 +95,7 @@ def off():
 	else:
 		stream_status = "off"
 
-def main():
+def test():
 	play(station['resonance'])
 	time.sleep(10)
 	news_break()
@@ -97,12 +104,21 @@ def main():
 	time.sleep(5)
 	off()
 
+def main():
+	while True:
+		channel_pin = GPIO.input(22)
+		news_pin = GPIO.input(23)
+		if news_pin == False:
+			print ("news break!")
+			news_break()
+			time.sleep(0.2)
+		if channel_pin == False:
+			global next_station
+			next_up = next_station
+			next_station = station[(station.keys()[1])] 
+			print ("playing next station")
+			play(next_up)
+			time.sleep(0.2)
+
 if __name__ == '__main__':
 	sys.exit(main())
-
-#little test loop for GPIO
-# while True:
-# 	if (GPIO.input(23) == 0):
-# 		print "news!"
-# 		news_break()
-# 	time.sleep(1)
