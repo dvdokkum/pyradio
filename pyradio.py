@@ -15,6 +15,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+channel_button = GPIO.input(22)
+news_button = GPIO.input(23)
+
 
 stream = 0
 stream_status = "off"
@@ -28,6 +31,7 @@ station['wfmu'] = "http://stream0.wfmu.org/freeform-128k.mp3"
 station['resonance'] = "http://54.77.136.103:8000/resonance"
 station['wbur'] = "http://wbur-sc.streamguys.com/wbur"
 
+## todo, increment this every time a play happens
 next_station = station[(station.keys()[0])]
 
 def init_npr():
@@ -106,8 +110,6 @@ def test():
 
 def main():
 	while True:
-		channel_pin = GPIO.input(22)
-		news_pin = GPIO.input(23)
 		if news_pin == False:
 			print ("news break!")
 			news_break()
