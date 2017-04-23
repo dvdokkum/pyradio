@@ -22,8 +22,6 @@ news_button = GPIO.input(23)
 stream = 0
 stream_status = "off"
 
-test = 0
-
 ## available stations ##
 station = {}
 station['wxyc'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
