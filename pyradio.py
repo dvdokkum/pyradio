@@ -102,24 +102,22 @@ def off():
 
 def test():
 	lcd.clear()
-	lcd.message('Now Testing...')
+	lcd.message('Now Testing... \nResonance')
 	play(station['resonance'])
-	lcd.clear()
-	lcd.message('Resonance')
 	time.sleep(10)
 	news_break()
 	lcd.clear()
-	lcd.message('News')
+	lcd.message('Now Testing... \nNews')
 	time.sleep(8)
 	play(station['wxyc'])
 	lcd.clear()
-	lcd.message('WXYC')
+	lcd.message('Now Testing... \nWXYC')
 	time.sleep(5)
-	lcd.clear()
-	lcd.message('test is over')
-	time.sleep(3)
-	lcd.clear()
 	off()
+	lcd.clear()
+	lcd.message('test complete')
+	time.sleep(2)
+	lcd.clear()
 
 # def main():
 # 	while True:
