@@ -9,16 +9,19 @@ from urlparse import urlparse
 
 
 # for fucking with buttons 
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-channel_button = GPIO.input(22)
-news_button = GPIO.input(23)
+# channel_button = GPIO.input(22)
+# news_button = GPIO.input(23)
 
+import lcd_init
+from lcd_init import lcd as lcd
 
+#some init values for the stream
 stream = 0
 stream_status = "off"
 
@@ -98,27 +101,32 @@ def off():
 		stream_status = "off"
 
 def test():
+	lcd.message('Now Testing...')
 	play(station['resonance'])
+	lcd.message('Resonance')
 	time.sleep(10)
 	news_break()
+	lcd.message('News')
 	time.sleep(8)
 	play(station['wxyc'])
+	lcd.message('WXYC')
 	time.sleep(5)
+	lcd.clear()
 	off()
 
-def main():
-	while True:
-		if news_pin == False:
-			print ("news break!")
-			news_break()
-			time.sleep(0.2)
-		if channel_pin == False:
-			global next_station
-			next_up = next_station
-			next_station = station[(station.keys()[1])] 
-			print ("playing next station")
-			play(next_up)
-			time.sleep(0.2)
+# def main():
+# 	while True:
+# 		if news_pin == False:
+# 			print ("news break!")
+# 			news_break()
+# 			time.sleep(0.2)
+# 		if channel_pin == False:
+# 			global next_station
+# 			next_up = next_station
+# 			next_station = station[(station.keys()[1])] 
+# 			print ("playing next station")
+# 			play(next_up)
+# 			time.sleep(0.2)
 
 if __name__ == '__main__':
 	sys.exit(main())
