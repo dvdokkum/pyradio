@@ -101,16 +101,23 @@ def off():
 		stream_status = "off"
 
 def test():
+	lcd.clear()
 	lcd.message('Now Testing...')
 	play(station['resonance'])
+	lcd.clear()
 	lcd.message('Resonance')
 	time.sleep(10)
 	news_break()
+	lcd.clear()
 	lcd.message('News')
 	time.sleep(8)
 	play(station['wxyc'])
+	lcd.clear()
 	lcd.message('WXYC')
 	time.sleep(5)
+	lcd.clear()
+	lcd.message('test is over')
+	time.sleep(3)
 	lcd.clear()
 	off()
 
