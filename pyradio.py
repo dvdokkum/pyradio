@@ -94,11 +94,22 @@ def off():
 	global stream_status
 	try:
 		stream.kill()
+		lcd.clear()
 	except (AttributeError, OSError):
 		stream_status = "off"
 		pass
 	else:
 		stream_status = "off"
+
+#display and play a station, input is number of station in dict
+def dplay(n):
+
+	# set the display and url values
+	name = station.keys()[n]
+	url = station.values()[n]
+
+	play(url)
+	lcd.message(name)
 
 def test():
 	lcd.clear()
