@@ -92,9 +92,9 @@ def news_break():
 #turns everything off
 def off():
 	global stream_status
+	lcd.clear()
 	try:
 		stream.kill()
-		lcd.clear()
 	except (AttributeError, OSError):
 		stream_status = "off"
 		pass
@@ -112,23 +112,14 @@ def dplay(n):
 	lcd.message(name)
 
 def test():
-	lcd.clear()
-	lcd.message('Now Testing... \nResonance')
 	play(station['resonance'])
 	time.sleep(10)
 	news_break()
-	lcd.clear()
-	lcd.message('Now Testing... \nNews')
 	time.sleep(8)
 	play(station['wxyc'])
-	lcd.clear()
-	lcd.message('Now Testing... \nWXYC')
 	time.sleep(5)
 	off()
-	lcd.clear()
-	lcd.message('test complete')
 	time.sleep(2)
-	lcd.clear()
 
 # def main():
 # 	while True:
