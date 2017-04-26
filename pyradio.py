@@ -26,17 +26,17 @@ stream = 0
 stream_status = "off"
 
 ## available stations ##
-station = {}
-station['wxyc'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
-station['wfmu'] = "http://stream0.wfmu.org/freeform-128k.mp3"
-station['resonance'] = "http://54.77.136.103:8000/resonance"
-station['wbur'] = "http://wbur-sc.streamguys.com/wbur"
+stations = {}
+stations['WXYC\n89.3 Chapel Hill'] = "http://audio-mp3.ibiblio.org:8000/wxyc.mp3"
+stations['WFMU\n91.1 Jersey City'] = "http://stream0.wfmu.org/freeform-128k.mp3"
+stations['Resonance\n104.4 London'] = "http://54.77.136.103:8000/resonance"
+stations['WBUR\n90.9 Boston'] = "http://wbur-sc.streamguys.com/wbur"
 
 news = {}
 
 ## todo, increment this every time a play happens
 def next():
-	z = len(station)
+	z = len(stations)
 	z = z - 1
 	if stream_status == z:
 		return 0
@@ -71,8 +71,8 @@ def play(n):
 	global stream_status
 	
 	# set the display and url values
-	name = station.keys()[n]
-	url = station.values()[n]
+	name = stations.keys()[n]
+	url = stations.values()[n]
 
 	off()
 	
@@ -136,19 +136,8 @@ def test():
 	off()
 	time.sleep(2)
 
-# def main():
-# 	while True:
-# 		if news_pin == False:
-# 			print ("news break!")
-# 			news_break()
-# 			time.sleep(0.2)
-# 		if channel_pin == False:
-# 			global next_station
-# 			next_up = next_station
-# 			next_station = station[(station.keys()[1])] 
-# 			print ("playing next station")
-# 			play(next_up)
-# 			time.sleep(0.2)
+def main():
+	play(next())
 
 if __name__ == '__main__':
 	sys.exit(main())
