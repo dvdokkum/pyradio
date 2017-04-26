@@ -36,7 +36,9 @@ news = {}
 
 ## todo, increment this every time a play happens
 def next():
-	if stream_status == len(station):
+	z = len(station)
+	z = z - 1
+	if stream_status == z:
 		return 0
 	elif type(stream_status) == int:
 		r = stream_status
