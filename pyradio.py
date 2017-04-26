@@ -51,6 +51,7 @@ def init_npr():
 
 	#grab the stream title incase we need it later
 	npr_title = d.entries[0].title
+	npr_title.replace(": ","\n")
 
 	news['npr'] = [npr_title, clean_url]
 
@@ -88,7 +89,7 @@ def play_news():
 		if last == "news" or last == "off":
 			pass
 		else:
-			play(last)	
+			dplay(last)	
 
 #play news in a thread so we can queue and interrupt if necessary
 def news_break():
