@@ -74,6 +74,9 @@ def play_news():
 	
 	#kill the stream
 	off()
+
+	#display most recent news hour title
+	lcd.message(news['npr'][0])
 	
 	#play the news (note the k argument in mpg123 is # of frames to skip. 900 should get us past the preroll ad)
 	stream = subprocess.Popen(["mpg123", "-q", "-k 900", news['npr'][1]], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -91,9 +94,6 @@ def play_news():
 def news_break():
 	t = threading.Thread(target=play_news)
 	t.start()
-	
-	#display most recent news hour title
-	lcd.message(news['npr'][0])
 
 #turns everything off
 def off():
