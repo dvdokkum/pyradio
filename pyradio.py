@@ -51,7 +51,7 @@ def init_npr():
 
 	#grab the stream title incase we need it later
 	npr_title = d.entries[0].title
-	npr_title.replace(": ","\n")
+	npr_title = npr_title.replace(": ","\n")
 
 	news['npr'] = [npr_title, clean_url]
 
@@ -117,11 +117,11 @@ def off():
 		stream_status = "off"
 
 def test():
-	play(station['resonance'])
+	play(0)
 	time.sleep(10)
 	news_break()
 	time.sleep(8)
-	play(station['wxyc'])
+	play(2)
 	time.sleep(5)
 	off()
 	time.sleep(2)
