@@ -39,9 +39,11 @@ def next():
 	if stream_status == len(station):
 		return 0
 	elif type(stream_status) == int:
-		return stream_status += 1
+		r = stream_status
+		r = r + 1
+		return r
 	else:
-		return 0	
+		return 0
 
 def init_npr():
 	global news
