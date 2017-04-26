@@ -35,7 +35,13 @@ station['wbur'] = "http://wbur-sc.streamguys.com/wbur"
 news = {}
 
 ## todo, increment this every time a play happens
-next_station = station[(station.keys()[0])]
+def next():
+	if stream_status == len(station):
+		return 0
+	elif type(stream_status) == int:
+		return stream_status += 1
+	else:
+		return 0	
 
 def init_npr():
 	global news
