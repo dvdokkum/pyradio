@@ -55,13 +55,21 @@ def init_npr():
 
 	news['npr'] = [npr_title, clean_url]
 
-#plays stream url provided in arg
-def play(s):
+#display and plays stream, pass number of station in station dict
+def play(n):
 	global stream
 	global stream_status
+	
+	# set the display and url values
+	name = station.keys()[n]
+	url = station.values()[n]
+
 	off()
-	stream = subprocess.Popen(["mpg123", "-q", s], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-	stream_status = s
+	
+	lcd.message(name)
+
+	stream = subprocess.Popen(["mpg123", "-q", url], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+	stream_status = n
 
 def play_news():
 	global stream
@@ -89,7 +97,7 @@ def play_news():
 		if last == "news" or last == "off":
 			pass
 		else:
-			dplay(last)	
+			play(last)	
 
 #play news in a thread so we can queue and interrupt if necessary
 def news_break():
@@ -107,16 +115,6 @@ def off():
 		pass
 	else:
 		stream_status = "off"
-
-#display and play a station, input is number of station in dict
-def dplay(n):
-
-	# set the display and url values
-	name = station.keys()[n]
-	url = station.values()[n]
-
-	play(url)
-	lcd.message(name)
 
 def test():
 	play(station['resonance'])
