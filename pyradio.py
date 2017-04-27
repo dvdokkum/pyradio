@@ -17,7 +17,6 @@ from lcd_init import lcd as lcd
 
 ## setup buttons
 GPIO.setmode(GPIO.BCM)
-
 GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -34,7 +33,7 @@ stations['WBUR\n90.9 Boston'] = "http://wbur-sc.streamguys.com/wbur"
 
 news = {}
 
-## todo, increment this every time a play happens
+## provides the next station in the list, used with play() to move through stations
 def next():
 	z = len(stations)
 	z = z - 1
@@ -47,6 +46,7 @@ def next():
 	else:
 		return 0
 
+# grabs the latest NPR hourly newscast stream URL and Title
 def init_npr():
 	global news
 	#fetch rss feed
@@ -65,7 +65,7 @@ def init_npr():
 
 	news['npr'] = [npr_title, clean_url]
 
-#display and plays stream, pass number of station in station dict
+# display and plays stream, pass number of station in station dict
 def play(n):
 	global stream
 	global stream_status
@@ -74,13 +74,17 @@ def play(n):
 	name = stations.keys()[n]
 	url = stations.values()[n]
 
+	# kill current stream and display message
 	off()
 	
+	# display new message
 	lcd.message(name)
 
+	# play new stream
 	stream = subprocess.Popen(["mpg123", "-q", url], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 	stream_status = n
 
+# function to play news, used within a thread
 def play_news():
 	global stream
 	global stream_status
@@ -91,7 +95,7 @@ def play_news():
 	#fetches latest newscast
 	init_npr()
 	
-	#kill the stream
+	#kill the stream and display message
 	off()
 
 	#display most recent news hour title
@@ -136,6 +140,7 @@ def test():
 	off()
 	time.sleep(2)
 
+# run everthing in a loop with button inputs
 def main():
 	while True:
 		s = GPIO.input(4)
