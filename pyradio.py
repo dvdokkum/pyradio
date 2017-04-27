@@ -4,22 +4,22 @@ import time
 import threading
 import subprocess
 
+# parsing NPR feed
 import feedparser
 from urlparse import urlparse
 
+## buttons
+import RPi.GPIO as GPIO
 
-# for fucking with buttons 
-# import RPi.GPIO as GPIO
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-# GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-# channel_button = GPIO.input(22)
-# news_button = GPIO.input(23)
-
+## lcd
 import lcd_init
 from lcd_init import lcd as lcd
+
+## setup buttons
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #some init values for the stream
 stream = 0
@@ -137,7 +137,18 @@ def test():
 	time.sleep(2)
 
 def main():
-	play(next())
+	
+	while True:
+        next = GPIO.input(4)
+        news = GPIO.input(17)
+
+        if next == False:
+                play(next())
+                time.sleep(0.5)
+
+        if news == False:
+                news_break()
+                time.sleep(0.5)
 
 if __name__ == '__main__':
 	sys.exit(main())
