@@ -137,18 +137,17 @@ def test():
 	time.sleep(2)
 
 def main():
-	
 	while True:
-        next = GPIO.input(4)
-        news = GPIO.input(17)
+        s = GPIO.input(4)
+        n = GPIO.input(17)
 
-        if next == False:
-                play(next())
-                time.sleep(0.5)
+        if s == False:
+            play(next())
+            time.sleep(0.5)
 
-        if news == False:
-                news_break()
-                time.sleep(0.5)
+        if n == False:
+            news_break()
+            time.sleep(0.5)
 
 if __name__ == '__main__':
 	sys.exit(main())
